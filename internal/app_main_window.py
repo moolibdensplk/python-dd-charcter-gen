@@ -298,8 +298,8 @@ class DDMainMenuWindow(QtWidgets.QMainWindow):
         }
 
         pdf_output_file_name = self.character_name + '.pdf'
-        pdf_output_path = "character_sheets/" + pdf_output_file_name
-        print("DEBUG: will output in: %s" % pdf_output_path)
+
+
         sheet_template_folder = "html_templates/"
         template_loader = jinja2.FileSystemLoader(sheet_template_folder)
         template_env = jinja2.Environment(loader=template_loader)
@@ -312,11 +312,17 @@ class DDMainMenuWindow(QtWidgets.QMainWindow):
         wkhtmltopdf_paths_per_os = {
             "Darwin": "/usr/local/bin/wkhtmltopdf",
             "Linux": "/usr/local/bin/wkhtmltopdf",
-            "Windows": "C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+            "Windows": r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+        }
+        pdf_output_paths = {
+            "Darwin": "character_sheets/" + pdf_output_file_name,
+            "Linux": "character_sheets/" + pdf_output_file_name,
+            "Windows": 'character_sheets\\'.strip() + pdf_output_file_name
         }
         os_platform = platform.system()
 
         wkhtmltopdf_binary = wkhtmltopdf_paths_per_os[os_platform]
         pdf_export_config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_binary)
-        pdfkit.from_string(output_text, pdf_output_path, configuration=pdf_export_config)
+        pdfkit.from_string(output_text, pdf_output_paths[os_platform], configuration=pdf_export_config)
+        print("Saved the character sheet in: %s" % pdf_output_paths[os_platform])
 

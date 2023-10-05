@@ -1,0 +1,5 @@
+internal/__pycache__/*
+character_sheets/*
+scratchFiles/*
+.idea/*
+.python-version

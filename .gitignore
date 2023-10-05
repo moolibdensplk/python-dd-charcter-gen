@@ -1,4 +1,5 @@
 internal/__pycache__/*
+character_sheets/*.pdf
 scratchFiles/*
 .idea/*
 .python-version
